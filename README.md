@@ -46,3 +46,8 @@ test 目录下为不同场景的功能测试case，可用于验证功能实现�
 其中 common.go 中的 _serverAddr_ 为服务部署的地址，默认为本机地址，可以根据实际情况修改
 
 测试数据写在 demo_data.go 中，用于列表接口的 mock 测试
+
+### 鸣谢
+[官方demo](github.com/RaymondCode/simple-demo/repository) 参考了很多很多
+[Eliaukle-go-blog](https://github.com/Eliaukle/Simple-Blog-Community.git) 参考登陆认证 [他的csdn写的很详细,借鉴了很多](https://blog.csdn.net/qq_50737715/article/details/127437065)
+
