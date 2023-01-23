@@ -13,6 +13,7 @@ rm dev || go build -o dev && ./dev
 ## 接口分配
 
 | principal | interface                     | state       |
+|-----------|-------------------------------|-------------|
 | null      | /douyin/feed                  | wait charge |
 | yly       | /douyin/user/regiser          | done        |
 | yly       | /douyin/user/login            | done        |
