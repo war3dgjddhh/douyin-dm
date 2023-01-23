@@ -36,7 +36,7 @@ func Register(c *gin.Context) {
 	password := c.Query("password")
 
 	user := repository.GetUserByUsername(username)
-	if user.ID != 0 {
+	if user.Id != 0 {
 		c.JSON(http.StatusOK, UserLoginResponse{
 			Response: Response{StatusCode: 1, StatusMsg: "User already exist"},
 		})
@@ -57,12 +57,13 @@ func Register(c *gin.Context) {
 	newUser := repository.User{
 		Username: username,
 		Password: string(hashedPassword),
+		Name:     username,
 		Avatar:   "/images/default_avatar.png",
 	}
 	repository.CreateUser(&newUser)
 	c.JSON(http.StatusOK, UserLoginResponse{
 		Response: Response{StatusCode: 0},
-		UserId:   newUser.ID,
+		UserId:   newUser.Id,
 		Token:    token,
 	})
 }
@@ -76,7 +77,7 @@ func Login(c *gin.Context) {
 	logrus.Infof("user is %v", user)
 
 	// test user is exist
-	if user.ID != 0 {
+	if user.Id != 0 {
 
 		// 判断密码是否正确
 		if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
@@ -91,7 +92,7 @@ func Login(c *gin.Context) {
 
 		c.JSON(http.StatusOK, UserLoginResponse{
 			Response: Response{StatusCode: 0},
-			UserId:   user.ID,
+			UserId:   user.Id,
 			Token:    token,
 		})
 	} else {
@@ -103,7 +104,7 @@ func Login(c *gin.Context) {
 
 func UserInfo(c *gin.Context) {
 	user, _ := c.Get("user")
-
+	user = Convert(user.(repository.User))
 	if user.(User).Id != 0 {
 		c.JSON(http.StatusOK, UserResponse{
 			Response: Response{StatusCode: 0},
@@ -114,4 +115,15 @@ func UserInfo(c *gin.Context) {
 			Response: Response{StatusCode: 1, StatusMsg: "User doesn't exist"},
 		})
 	}
+}
+
+func Convert(su repository.User) User {
+	user := User{
+		Id:            int64(su.Id),
+		Name:          su.Name,
+		FollowerCount: int64(su.FollowerCount),
+		FollowCount:   int64(su.FollowCount),
+	}
+	return user
+
 }

@@ -11,6 +11,8 @@ import (
 // jwt加密密钥
 var jwtKey = []byte("1234jkhj1k2h*")
 
+const ToeknPrefix = "douyin-"
+
 type Claims struct {
 	UserId uint64
 	jwt.StandardClaims
@@ -22,7 +24,7 @@ func ReleaseToken(user repository.User) (string, error) {
 	expirationTime := time.Now().Add(7 * 24 * time.Hour)
 	claims := &Claims{
 		// 自定义字段
-		UserId: user.ID,
+		UserId: user.Id,
 		// 标准字段
 		StandardClaims: jwt.StandardClaims{
 			// 过期时间
@@ -38,7 +40,7 @@ func ReleaseToken(user repository.User) (string, error) {
 		return "", err
 	}
 	// 返回token
-	return tokenString, nil
+	return ToeknPrefix + tokenString, nil
 }
 
 // resolve token

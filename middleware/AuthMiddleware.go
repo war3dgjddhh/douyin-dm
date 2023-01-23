@@ -7,23 +7,19 @@ import (
 	"github.com/RaymondCode/simple-demo/common"
 	"github.com/RaymondCode/simple-demo/repository"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 获取authorization header
-		tokenString := c.Request.Header.Get("Authorization")
-		// token为空
+		//	tokenString := c.Request.Header.Get("Authorization")
+		tokenString := c.Query("token")
 		if tokenString == "" {
-			c.JSON(http.StatusOK, gin.H{
-				"code": 401,
-				"msg":  "权限不足",
-			})
-			c.Abort()
-			return
+			tokenString = c.PostForm("token")
 		}
-		// 非法token
-		if tokenString == "" || len(tokenString) < 7 || !strings.HasPrefix(tokenString, "Bearer") {
+		// token为空 非法token
+		if tokenString == "" || len(tokenString) < 7 || !strings.HasPrefix(tokenString, common.ToeknPrefix) {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"code": 401,
 				"msg":  "权限不足",
@@ -32,9 +28,12 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 		// 提取token的有效部分
-		tokenString = tokenString[7:]
+		logrus.Infof("go run to this , token =%s", tokenString)
+		tokenString = tokenString[len(common.ToeknPrefix):]
 		// 解析token
 		token, claims, err := common.ParseToken(tokenString)
+		logrus.Infof("go run resolve token , token =%s", tokenString)
+
 		// 非法token
 		if err != nil || !token.Valid {
 			c.JSON(http.StatusUnauthorized, gin.H{

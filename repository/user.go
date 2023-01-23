@@ -5,13 +5,13 @@ import (
 )
 
 type User struct {
-	ID             uint64 `gorm:"primarykey"`
-	Username       string
-	Name           string
-	Avatar         string
-	Password       string
-	Follower_count uint64
-	Follow_count   uint64
+	Id            uint64 `gorm:"primarykey"`
+	Username      string
+	Name          string
+	Avatar        string
+	Password      string
+	FollowerCount uint64
+	FollowCount   uint64
 }
 
 type UserInfo struct {
@@ -38,11 +38,11 @@ func GetUserById(Id uint64) User {
 
 func CreateUser(u *User) uint64 {
 	db.Create(u)
-	return u.ID
+	return u.Id
 }
 
 func GenerateA() {
 	user := User{Name: "yly", Username: "1234", Password: "1234"}
 	result := db.Create(&user)
-	fmt.Printf("userId=%d,err=%s,affected=%d", user.ID, result.Error, result.RowsAffected)
+	fmt.Printf("userId=%d,err=%s,affected=%d", user.Id, result.Error, result.RowsAffected)
 }
