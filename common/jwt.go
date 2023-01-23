@@ -3,8 +3,8 @@ package common
 import (
 	"time"
 
-	"github.com/RaymondCode/simple-demo/repository"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/war3dgjddhh/douyin-dm/repository"
 )
 
 /* common/jwt.go */

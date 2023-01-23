@@ -1,11 +1,10 @@
 package main
 
-//	"github.com/RaymondCode/simple-demo/service"
 //	"github.com/gin-gonic/gin"
 import (
 	"fmt"
 
-	"github.com/RaymondCode/simple-demo/repository"
+	"github.com/war3dgjddhh/douyin-dm/repository"
 	"github.com/gin-gonic/gin"
 )
 

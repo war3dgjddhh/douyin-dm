@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/RaymondCode/simple-demo/controller"
-	"github.com/RaymondCode/simple-demo/middleware"
 	"github.com/gin-gonic/gin"
+	"github.com/war3dgjddhh/douyin-dm/controller"
+	"github.com/war3dgjddhh/douyin-dm/middleware"
 )
 
 func initRouter(r *gin.Engine) {

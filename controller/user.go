@@ -3,10 +3,10 @@ package controller
 import (
 	"net/http"
 
-	"github.com/RaymondCode/simple-demo/common"
-	"github.com/RaymondCode/simple-demo/repository"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"github.com/war3dgjddhh/douyin-dm/common"
+	"github.com/war3dgjddhh/douyin-dm/repository"
 	"golang.org/x/crypto/bcrypt"
 )
 
