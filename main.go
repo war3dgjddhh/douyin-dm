@@ -1,12 +1,21 @@
 package main
 
+//	"github.com/RaymondCode/simple-demo/service"
+//	"github.com/gin-gonic/gin"
 import (
-	"github.com/RaymondCode/simple-demo/service"
+	"fmt"
+
+	"github.com/RaymondCode/simple-demo/repository"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	go service.RunMessageServer()
+	err := repository.Init()
+	if err != nil {
+		fmt.Printf("%s", err)
+	}
+
+	//	go service.RunMessageServer()
 
 	r := gin.Default()
 

@@ -3,9 +3,14 @@ module github.com/RaymondCode/simple-demo
 go 1.17
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gavv/httpexpect/v2 v2.8.0
 	github.com/gin-gonic/gin v1.7.7
+	github.com/sirupsen/logrus v1.9.0
 	github.com/stretchr/testify v1.7.0
+	golang.org/x/crypto v0.0.0-20220427172511-eb4f295cb31f
+	gorm.io/driver/mysql v1.4.5
+	gorm.io/gorm v1.24.3
 )
 
 require (
@@ -17,10 +22,13 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
+	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/imkira/go-interpol v1.1.0 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.15.0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
@@ -40,9 +48,8 @@ require (
 	github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
-	golang.org/x/crypto v0.0.0-20220427172511-eb4f295cb31f // indirect
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
-	golang.org/x/sys v0.0.0-20220503163025-988cb79eb6c6 // indirect
+	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

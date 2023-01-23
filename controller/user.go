@@ -1,14 +1,15 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
-	"sync/atomic"
+
+	"github.com/RaymondCode/simple-demo/common"
+	"github.com/RaymondCode/simple-demo/repository"
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
+	"golang.org/x/crypto/bcrypt"
 )
 
-// usersLoginInfo use map to store user info, and key is username+password for demo
-// user data will be cleared every time the server starts
-// test data: username=zhanglei, password=douyin
 var usersLoginInfo = map[string]User{
 	"zhangleidouyin": {
 		Id:            1,
@@ -19,11 +20,9 @@ var usersLoginInfo = map[string]User{
 	},
 }
 
-var userIdSequence = int64(1)
-
 type UserLoginResponse struct {
 	Response
-	UserId int64  `json:"user_id,omitempty"`
+	UserId uint64 `json:"user_id,omitempty"`
 	Token  string `json:"token"`
 }
 
@@ -36,37 +35,63 @@ func Register(c *gin.Context) {
 	username := c.Query("username")
 	password := c.Query("password")
 
-	token := username + password
-
-	if _, exist := usersLoginInfo[token]; exist {
+	user := repository.GetUserByUsername(username)
+	if user.ID != 0 {
 		c.JSON(http.StatusOK, UserLoginResponse{
 			Response: Response{StatusCode: 1, StatusMsg: "User already exist"},
 		})
-	} else {
-		atomic.AddInt64(&userIdSequence, 1)
-		newUser := User{
-			Id:   userIdSequence,
-			Name: username,
-		}
-		usersLoginInfo[token] = newUser
-		c.JSON(http.StatusOK, UserLoginResponse{
-			Response: Response{StatusCode: 0},
-			UserId:   userIdSequence,
-			Token:    username + password,
-		})
+		return
 	}
+	// 发放token
+	token, err := common.ReleaseToken(user)
+	if err != nil {
+		c.JSON(http.StatusOK, UserLoginResponse{
+			Response: Response{StatusCode: 500, StatusMsg: "System Error"},
+		})
+		return
+	}
+
+	// 密码加密
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	// 创建用户
+	newUser := repository.User{
+		Username: username,
+		Password: string(hashedPassword),
+		Avatar:   "/images/default_avatar.png",
+	}
+	repository.CreateUser(&newUser)
+	c.JSON(http.StatusOK, UserLoginResponse{
+		Response: Response{StatusCode: 0},
+		UserId:   newUser.ID,
+		Token:    token,
+	})
 }
 
 func Login(c *gin.Context) {
 	username := c.Query("username")
 	password := c.Query("password")
 
-	token := username + password
+	user := repository.GetUserByUsername(username)
 
-	if user, exist := usersLoginInfo[token]; exist {
+	logrus.Infof("user is %v", user)
+
+	// test user is exist
+	if user.ID != 0 {
+
+		// 判断密码是否正确
+		if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
+			c.JSON(http.StatusOK, UserLoginResponse{Response: Response{StatusCode: 422, StatusMsg: "User password incorrent"}})
+			return
+		}
+
+		token, err := common.ReleaseToken(user)
+		if err != nil {
+			c.JSON(http.StatusOK, UserLoginResponse{Response: Response{StatusCode: 500, StatusMsg: "System Error"}})
+		}
+
 		c.JSON(http.StatusOK, UserLoginResponse{
 			Response: Response{StatusCode: 0},
-			UserId:   user.Id,
+			UserId:   user.ID,
 			Token:    token,
 		})
 	} else {
@@ -77,12 +102,12 @@ func Login(c *gin.Context) {
 }
 
 func UserInfo(c *gin.Context) {
-	token := c.Query("token")
+	user, _ := c.Get("user")
 
-	if user, exist := usersLoginInfo[token]; exist {
+	if user.(User).Id != 0 {
 		c.JSON(http.StatusOK, UserResponse{
 			Response: Response{StatusCode: 0},
-			User:     user,
+			User:     user.(User),
 		})
 	} else {
 		c.JSON(http.StatusOK, UserResponse{
