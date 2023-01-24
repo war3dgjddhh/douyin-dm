@@ -24,7 +24,15 @@ func Init() error {
 		port,
 		database,
 		charset)
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+		SkipDefaultTransaction: true, // 写操作将不会进入事务, 提高性能
+		PrepareStmt:            true, // 启用预编译缓存，提高性能
+	})
+
+	if err == nil {
+		panic("failed to connect database")
+	}
+
 	db.AutoMigrate(&User{})
 	return err
 }
