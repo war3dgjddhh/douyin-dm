@@ -29,7 +29,7 @@ func Init() error {
 		PrepareStmt:            true, // 启用预编译缓存，提高性能
 	})
 
-	if err == nil {
+	if err != nil {
 		panic("failed to connect database")
 	}
 

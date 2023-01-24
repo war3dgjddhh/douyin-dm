@@ -12,19 +12,19 @@ go build -o dev && ./dev
 ### ![官方文档](https://bytedance.feishu.cn/docs/doccnKrCsU5Iac6eftnFBdsXTof)
 ### 课程资料大全
 
-![gorm 详解](https://bytedance.feishu.cn/file/boxcngmUNHi2joONiiEOgSpJt8d)
-![go 三件套详解](https://bytedance.feishu.cn/file/boxcnKHOoYmud2SuUGmhFaGbjVb)
-![高性能 go](https://bytedance.feishu.cn/file/boxcngF8NWGNFuXUkdyQViZq6vd)
-![调优 go](https://bytedance.feishu.cn/file/boxcn7AkvSWnRkHEttsuYHqW24g)
-![实战项目-go 笔记服务](https://bytedance.feishu.cn/docx/Wwa4dfwScogfjLxclXKcStGEncd)
-![gorm 官网](https://gorm.io/)
+- ![gorm 详解](https://bytedance.feishu.cn/file/boxcngmUNHi2joONiiEOgSpJt8d)
+- ![go 三件套详解](https://bytedance.feishu.cn/file/boxcnKHOoYmud2SuUGmhFaGbjVb)
+- ![高性能 go](https://bytedance.feishu.cn/file/boxcngF8NWGNFuXUkdyQViZq6vd)
+- ![调优 go](https://bytedance.feishu.cn/file/boxcn7AkvSWnRkHEttsuYHqW24g)
+- ![实战项目-go 笔记服务](https://bytedance.feishu.cn/docx/Wwa4dfwScogfjLxclXKcStGEncd)
+- ![gorm 官网](https://gorm.io/)
 
 
 
 ### 参考
-[官方demo](github.com/RaymondCode/simple-demo/repository) 参考了很多很多
-[Eliaukle-go-blog](https://github.com/Eliaukle/Simple-Blog-Community.git) 参考登陆认证
-[详细教程](https://blog.csdn.net/qq_50737715/article/details/127437065)
+- [官方demo](github.com/RaymondCode/simple-demo/repository) 参考了很多很多
+- [Eliaukle-go-blog](https://github.com/Eliaukle/Simple-Blog-Community.git) 参考登陆认证
+- [详细教程](https://blog.csdn.net/qq_50737715/article/details/127437065)
 
 ## 接口分配
 
